@@ -1,0 +1,9 @@
+---
+- hosts: client
+  gather_facts: no
+  tasks:
+    - name: Client VM'yi kapat
+      ansible.builtin.shell: "shutdown -h now"
+      become: true
+      async: 1
+      poll: 0

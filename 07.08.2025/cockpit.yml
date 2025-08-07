@@ -1,0 +1,29 @@
+---
+- name: Install and enable Cockpit on Ubuntu/Debian
+  hosts: cockpit
+  become: true
+
+  tasks:
+    - name: Ensure apt cache is updated
+      apt:
+        update_cache: yes
+
+    - name: Install Cockpit packages
+      apt:
+        name:
+          - cockpit
+          - cockpit-machines
+          - cockpit-networkmanager
+        state: present
+
+    - name: Enable and start Cockpit socket
+      systemd:
+        name: cockpit.socket
+        enabled: yes
+        state: started
+
+    - name: Enable and start libvirtd (optional, for VM management)
+      systemd:
+        name: libvirtd
+        enabled: yes
+        state: started
